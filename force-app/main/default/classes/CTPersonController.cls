@@ -8,8 +8,10 @@ public with sharing class CTPersonController {
     //Get all the recent actual dates about the Health Changes 
     public static List<Person__c> getRecentHealthChanges(List<Person__c> lstPrs){
         List<Person__c> recordsLst = [SELECT Id, Name, Health_Status__c, Mobile__c, 
-                                        Status_Update_Date__c, Token__c FROM Person__c ORDER BY Status_Update_Date__c DESC NULLS LAST];
-     /*   for(Person__c person: recordsLst){
+                                        
+        Status_Update_Date__c, Token__c FROM Person__c ORDER BY Status_Update_Date__c DESC NULLS LAST];
+
+ /*       for(Person__c person: recordsLst){
             if(person.CreatedDate.date().daysBetween(person.Status_Update_Date__c) < 10){
                 //(system.today()).daysBetween(Date.valueOf(cc1.ClosedDate));
                 person.Health_Status__c = 'Green';

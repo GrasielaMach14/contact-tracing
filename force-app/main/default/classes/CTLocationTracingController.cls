@@ -25,7 +25,47 @@ public with sharing class CTLocationTracingController {
 
       return records;
     }
-    public static List<Location_Tracing__c> checkDuplicates(List<Location_Tracing__c> duplicates){
+    //Pegar registros duplicados do rastreamento dos locais
+    public static List<Location_Tracing__c> checkDuplicates(List<Location_Tracing__c> newLocationTraces){
+        //Inserir registros únicos para cada objeto usando o set<id>
+        Set<Id> locationIds = new Set<Id>();
+        Set<Id> personIds = new Set<Id>();
+
+        //Iterar sobre a nova lista passada como parâmetro
+        for(Location_Tracing__c trc: newLocationTraces){
+            locationIds.add(trc.Location__c);
+            personIds.add(trc.Person__c);
+        }
+        //Mapear os locais e pessoas para depois verificar duplicação
+        Map<Id, Set<Id>> mapExistingRecords = new Map<Id, Set<Id>>();
+
+        //Consultar registros existentes
+        List<Location_Tracing__c> existingRecords = [SELECT Id, Person__c, Person__r.Name, Location__c, 
+                                                                        Location__r.Name, Visit_Date__c 
+                                                                        FROM Location_Tracing__c];
+       //Essa lista vazia irá inserir os registros duplicados
+       List<Location_Tracing__c> duplicates = new List<Location_Tracing__c>();
+       //Verificar se no map existe Location, se não tiver, inserir agora
+        if (existingRecords != null && existingRecords.size() > 0) {
+            for(Location_Tracing__c trace: existingRecords){
+                if (!mapExistingRecords.containsKey(trace.Location__c)) {
+                    mapExistingRecords.put(trace.Location__c, new Set<Id>());
+                }
+                //e agora vamos add o campo Person__c no map finalizando assim o preenchimento do map
+                mapExistingRecords.get(trace.Location__c).add(trace.Person__c);
+            }
+        //Itere e faça a comparação do registro do parâmetro do método e da lista duplicates
+            for (Location_Tracing__c lcTrace : newLocationTraces) {
+                if (mapExistingRecords.containsKey(lcTrace.Location__c) 
+                && mapExistingRecords.get(lcTrace.Location__c).contains(lcTrace.Person__c)) {
+                    duplicates.add(lcTrace);
+                }   
+            }
+        }
+        return duplicates;
+    }
+
+/*    public static List<Location_Tracing__c> checkDuplicates(List<Location_Tracing__c> duplicates){
         List<Location_Tracing__c> records = [SELECT Id, Person__c, Person__r.Name, Location__c, 
                                              					Location__r.Name, Visit_Date__c 
                                                                     FROM Location_Tracing__c];
@@ -40,7 +80,7 @@ public with sharing class CTLocationTracingController {
             listTrace.add(trc);
         }
        return listTrace;        
-    }
+    } */
 }
 
 /*

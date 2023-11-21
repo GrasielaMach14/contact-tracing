@@ -27,7 +27,7 @@ public with sharing class CTLocationTracingController {
     }
     //Pegar registros duplicados do rastreamento dos locais
     public static List<Location_Tracing__c> checkDuplicates(List<Location_Tracing__c> newLocationTraces){
-        //Inserir registros únicos para cada objeto usando o set<id>
+        //Inserir registros únicos para cada objeto a ser add no map usando o set<id>
         Set<Id> locationIds = new Set<Id>();
         Set<Id> personIds = new Set<Id>();
 

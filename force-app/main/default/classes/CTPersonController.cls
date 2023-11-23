@@ -9,20 +9,7 @@ public with sharing class CTPersonController {
     public static List<Person__c> getRecentHealthChanges(List<Person__c> lstPrs){
         List<Person__c> recordsLst = [SELECT Id, Name, Health_Status__c, Mobile__c, Status_Update_Date__c, Token__c 
                                                     FROM Person__c ORDER BY Status_Update_Date__c DESC NULLS LAST];
-
- /*       for(Person__c person: recordsLst){
-            if(person.CreatedDate.date().daysBetween(person.Status_Update_Date__c) < 10){
-                //(system.today()).daysBetween(Date.valueOf(cc1.ClosedDate));
-                person.Health_Status__c = 'Green';
-            }else if(person.CreatedDate.date().daysBetween(person.Status_Update_Date__c) == 10){
-                person.Health_Status__c = 'Yellow';
-            }else if(person.CreatedDate.date().daysBetween(person.Status_Update_Date__c) < 15){
-                person.Health_Status__c = 'Orange';
-            }else if(person.CreatedDate.date().daysBetween(person.Status_Update_Date__c) < 15){
-                person.Health_Status__c = 'Red';
-            }
-            recordsLst.add(person); 
-        }*/                                        
+                                      
         return recordsLst;
     }
     //Find a research of name or mobile or token  in query
@@ -48,6 +35,20 @@ public with sharing class CTPersonController {
         }
 
         return null;
+    }
+
+    public static Map<String,Integer> getHealthStatusCount(){
+ 
+        Map<String,Integer> mapResults = new Map<String,Integer>();
+      
+        for(AggregateResult result: [SELECT Health_Status__c, COUNT(Id) total 
+                                                    FROM Person__c 
+                                                    GROUP BY Health_Status__c]){
+            String healthStatus = String.valueOf(result.get('Health_Status__c'));
+            Integer total = Integer.valueOf(result.get('total'));
+            mapResults.put(healthStatus, total);           
+        }    
+        return mapResults;
     }
 }
 

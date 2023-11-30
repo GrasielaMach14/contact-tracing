@@ -94,6 +94,55 @@ public with sharing class CTPersonController {
         }
         return neighbours;
     }
+    //Buscar primeiro contato entre as pessoas
+    public static Set<Id> getPrimaryContacts(Set<Id> personIds){
+        //Lista definindo o status de saúde da pessoa
+        List<String> healthStatus = new List<String>{'Green', 'Yellow'};
+        //Lista que consulta pessoas em contato no local e que sejam outros
+        List<People_Tracing__c> peopleTraces = [SELECT Id, Person_1__c, Person_2__c FROM People_Tracing__c 
+                                                            WHERE (Person_1__c IN: personIds OR Person_2__c IN: personIds) 
+                                                            AND Contact_Type__c = 'Other' 
+                                                            AND Contact_Date__c = LAST_N_DAYS:10
+                                                            AND (Person_1__r.Health_Status__c IN: healthStatus 
+                                                            OR Person_2__r.Health_Status__c IN: healthStatus)];
+        Set<Id> primaryContact = new Set<Id>();
+        for(People_Tracing__c pt: peopleTraces){
+            //Senão for Person_1 então será o primeiro contato(3ª pessoa em contato)
+            if(!personIds.contains(pt.Person_1__c)){
+                primaryContact.add(pt.Person_1__c);
+            }
+            //Senao for Person_2 então será o segundo contato de acordo com o 1º
+            if(!personIds.contains(pt.Person_2__c)){
+                primaryContact.add(pt.Person_2__c);
+            }
+        }
+        return primaryContact;
+    }
+     //Buscar segundo contato entre as pessoas referenciando o primeiro contato
+     public static Set<Id> getSecundaryContacts(Set<Id> primaryContactIds){
+        //Lista definindo o status de saúde da pessoa
+        List<String> healthStatus = new List<String>{'Green', 'Yellow'};
+        //Lista que consulta pessoas em contato no local verificando os primeiros contatos para encontrar o segundo contato
+        List<People_Tracing__c> peopleTraces = [SELECT Id, Person_1__c, Person_2__c FROM People_Tracing__c 
+                                                            WHERE (Person_1__c IN: primaryContactIds OR Person_2__c IN: primaryContactIds) 
+                                                            AND Contact_Type__c = 'OTHER'
+                                                            AND Contact_Date__c = LAST_N_DAYS:10 
+                                                            AND (Person_1__r.Health_Status__c IN:healthStatus 
+                                                            OR Person_2__r.Health_Status__c IN:healthStatus)];
+        Set<Id> secondaryContacts = new Set<Id>();
+        for(People_Tracing__c pt: peopleTraces){
+            //Senão for Person_1 então será o próximo será o contato)
+            if(!primaryContactIds.contains(pt.Person_1__c)){
+                secondaryContacts.add(pt.Person_1__c);
+            }
+            //Senao for Person_2 então será o próximo será o contato)
+            if(!primaryContactIds.contains(pt.Person_2__c)){
+                secondaryContacts.add(pt.Person_2__c);
+            }
+        }
+        return secondaryContacts;
+    }
+    
 }
 
 /*

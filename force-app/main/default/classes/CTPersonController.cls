@@ -50,6 +50,50 @@ public with sharing class CTPersonController {
         }    
         return mapResults;
     }
+    //Buscar cohabitantes entre as pessoas dos campos
+    public static Set<Id> getCohabitants(Set<Id> personIds){
+        //Lista definindo o status de saúde da pessoa
+        List<String> healthStatus = new List<String>{'Green', 'Yellow'};
+        //Lista que consulta pessoas em contato no local e que sejam cohabitantes
+        List<People_Tracing__c> peopleTraces = [SELECT Id, Person_1__c, Person_2__c FROM People_Tracing__c 
+                                                            WHERE (Person_1__c IN: personIds OR Person_2__c IN: personIds) 
+                                                            AND Contact_Type__c = 'Cohabitant' 
+                                                            AND (Person_1__r.Health_Status__c IN: healthStatus 
+                                                            OR Person_2__r.Health_Status__c IN: healthStatus)];
+        Set<Id> cohabitants = new Set<Id>();
+        for(People_Tracing__c pt: peopleTraces){
+            //Senão for Person_1 então será o cohabitante(3ª pessoa em contato)
+            if(!personIds.contains(pt.Person_1__c)){
+                cohabitants.add(pt.Person_1__c);
+            }
+            //Senao for Person_2 então será o cohabitante(3ª pessoa em contato)
+            if(!personIds.contains(pt.Person_2__c)){
+                cohabitants.add(pt.Person_2__c);
+            }
+        }
+        return cohabitants;
+    }
+    //Buscar vizinhos entre as pessoas dos campos
+    public static Set<Id> getNeighbours(Set<Id> personIds){
+        //Lista que consulta pessoas em contato no local e que sejam vizinhas
+        List<People_Tracing__c> peopleTraces = [SELECT Id, Person_1__c, Person_2__c FROM People_Tracing__c 
+                                                            WHERE (Person_1__c IN: personIds OR Person_2__c IN: personIds) 
+                                                            AND Contact_Type__c = 'Neighbour' 
+                                                            AND (Person_1__r.Health_Status__c = 'Green' 
+                                                            OR Person_2__r.Health_Status__c = 'Green')];
+        Set<Id> neighbours = new Set<Id>();
+        for(People_Tracing__c pt: peopleTraces){
+            //Senão for Person_1 então será o vizinho(3ª pessoa em contato)
+            if(!personIds.contains(pt.Person_1__c)){
+                neighbours.add(pt.Person_1__c);
+            }
+            //Senao for Person_2 então será o vizinho(3ª pessoa em contato)
+            if(!personIds.contains(pt.Person_2__c)){
+                neighbours.add(pt.Person_2__c);
+            }
+        }
+        return neighbours;
+    }
 }
 
 /*

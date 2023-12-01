@@ -38,4 +38,34 @@ public with sharing class CTLocationController {
         }
         return mapResults;
     }
+        //Atualizar Local usando os campos Location__c, Red_Score__c e Status__c 
+        public static void updateRedScore(Set<Id> locationsIds){
+            List<Location__c> lstLocation = new List<Location__c>();
+            AggregateResult[] redPeopleLocation = [SELECT Location__c, COUNT(Id) total FROM Location_Tracing__c 
+                                                                    WHERE Person__r.Health_Status__c = 'Red' 
+                                                                    AND Visit_Date__c = LAST_N_DAYS:10 
+                                                                    AND Id IN: locationsIds 
+                                                                    GROUP BY Location__c];
+            for(AggregateResult result: redPeopleLocation){
+                String localId = String.valueOf(result.get('Location__c'));
+                Integer redScore = Integer.valueOf(result.get('total'));
+                String status = getStatusLocation(redScore);
+                lstLocation.add(new Location__c(Id = localId, Red_Score__c = redScore, Status__c = status));
+            }
+            if(lstLocation != null && lstLocation.size() > 0){
+                update lstLocation;
+            }
+        }
+        //Retornar o valor do Status de Saúde do local e usar no método acima
+        public static String getStatusLocation(Integer redScore){
+            if(redScore == 0){
+                return 'Green';
+            }else if(redScore >= 5){
+                return 'Orange';
+            }else if(redScore >= 10){
+                return 'Yellow';
+            }else{
+                return 'Red';
+            }
+        }
 }

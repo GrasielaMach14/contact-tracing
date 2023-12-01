@@ -23,18 +23,39 @@ public with sharing class CTContactTracingHandler {
                 statusRed.add(ps.Id);
             }
         }
+        //Construir uma lista das pessoas com o status marcado(laranja ou amarelo)
+        List<Person__c> lstUpdatePersons = new List<Person__c>();
         //Verificar os registros que já foram processados para não serem executados novamente
         Set<Id> alreadyProcessed = new Set<Id>();
         Set<Id> statusOrange = new Set<Id>();
         Set<Id> statusYellow = new Set<Id>();
         //Próximo segundo contato do cohabitante em vermelho será laranja
         statusOrange.addAll(CTPersonController.getCohabitants(statusRed, alreadyProcessed));
-        //Próximo segundo contato do vizinho em vermelho será amarelo
-        statusYellow.addAll(CTPersonController.getNeighbours(statusRed, alreadyProcessed));
         Set<Id> primaryContacts = CTPersonController.getPrimaryContacts(statusRed, alreadyProcessed);
         //Próximo segundo contato do contato principal em vermelho será laranja
         statusOrange.addAll(primaryContacts);
+        //Próximo segundo contato do vizinho em vermelho será amarelo
+        statusYellow.addAll(CTPersonController.getNeighbours(statusRed, alreadyProcessed));        
         //O contato principal em vermelho terá o contato secundário em amarelo
         statusYellow.addAll(CTPersonController.getSecundaryContacts(primaryContacts, alreadyProcessed));
+
+        for(Id psId : statusOrange) {
+           lstUpdatePersons.add(new Person__c(Id = psId, Health_Status__c = 'Orange')); 
+        }
+        for(Id psId2 : statusYellow){
+            lstUpdatePersons.add(new Person__c(Id = psId2, Health_Status__c = 'Yellow'));
+        }
+        if(lstUpdatePersons.size() > 0){
+            update lstUpdatePersons;
+        }
+        //Capturar os locais que houveram mudanças de Status de saúde de cada pessoa e para isso será usado statusCange como parâmetro
+        List<Location_Tracing__c> lstLocalTrack = CTLocationTracingController.getLocationsByPersonIds(statusChange);
+        if(lstLocalTrack != null && lstLocalTrack.size() > 0){
+            Set<Id> locationsId = new Set<Id>();
+            for(Location_Tracing__c track: lstLocalTrack){
+                locationsId.add(track.Location__c);
+            }
+            CTLocationController.updateRedScore(locationsId);
+        }
     }
 }

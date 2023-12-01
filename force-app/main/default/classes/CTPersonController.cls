@@ -137,12 +137,12 @@ public with sharing class CTPersonController {
                                                             OR Person_2__r.Health_Status__c IN:healthStatus)];
         Set<Id> secondaryContacts = new Set<Id>();
         for(People_Tracing__c pt: peopleTraces){
-            //Senão for Person_1 então será o próximo será o contato)
+            //Senão for Person_1 então será o próximo contato)
             if(!primaryContactIds.contains(pt.Person_1__c)){
                 secondaryContacts.add(pt.Person_1__c);
                 alreadyProcessed.add(pt.Person_1__c);
             }
-            //Senão for Person_2 então será o próximo será o contato)
+            //Senão for Person_2 então será o próximo contato)
             if(!primaryContactIds.contains(pt.Person_2__c)){
                 secondaryContacts.add(pt.Person_2__c);
                 alreadyProcessed.add(pt.Person_2__c);

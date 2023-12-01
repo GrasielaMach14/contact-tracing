@@ -50,8 +50,8 @@ public with sharing class CTPersonController {
         }    
         return mapResults;
     }
-    //Buscar cohabitantes entre as pessoas dos campos
-    public static Set<Id> getCohabitants(Set<Id> personIds){
+    //Buscar cohabitantes entre as pessoas marcados com laranja
+    public static Set<Id> getCohabitants(Set<Id> personIds, Set<Id> alreadyProcessed){
         //Lista definindo o status de saúde da pessoa
         List<String> healthStatus = new List<String>{'Green', 'Yellow'};
         //Lista que consulta pessoas em contato no local e que sejam cohabitantes
@@ -63,18 +63,20 @@ public with sharing class CTPersonController {
         Set<Id> cohabitants = new Set<Id>();
         for(People_Tracing__c pt: peopleTraces){
             //Senão for Person_1 então será o cohabitante(3ª pessoa em contato)
-            if(!personIds.contains(pt.Person_1__c)){
+            if(!alreadyProcessed.contains(pt.Person_1__c)){
                 cohabitants.add(pt.Person_1__c);
+                alreadyProcessed.add(pt.Person_1__c);
             }
             //Senao for Person_2 então será o cohabitante(3ª pessoa em contato)
-            if(!personIds.contains(pt.Person_2__c)){
+            if(!alreadyProcessed.contains(pt.Person_2__c)){
                 cohabitants.add(pt.Person_2__c);
+                alreadyProcessed.add(pt.Person_2__c);
             }
         }
         return cohabitants;
     }
-    //Buscar vizinhos entre as pessoas dos campos
-    public static Set<Id> getNeighbours(Set<Id> personIds){
+    //Buscar vizinhos entre as pessoas marcadas com amarelo
+    public static Set<Id> getNeighbours(Set<Id> personIds, Set<Id> alreadyProcessed){
         //Lista que consulta pessoas em contato no local e que sejam vizinhas
         List<People_Tracing__c> peopleTraces = [SELECT Id, Person_1__c, Person_2__c FROM People_Tracing__c 
                                                             WHERE (Person_1__c IN: personIds OR Person_2__c IN: personIds) 
@@ -84,18 +86,20 @@ public with sharing class CTPersonController {
         Set<Id> neighbours = new Set<Id>();
         for(People_Tracing__c pt: peopleTraces){
             //Senão for Person_1 então será o vizinho(3ª pessoa em contato)
-            if(!personIds.contains(pt.Person_1__c)){
+            if(!alreadyProcessed.contains(pt.Person_1__c)){
                 neighbours.add(pt.Person_1__c);
+                alreadyProcessed.add(pt.Person_1__c);
             }
             //Senao for Person_2 então será o vizinho(3ª pessoa em contato)
-            if(!personIds.contains(pt.Person_2__c)){
+            if(!alreadyProcessed.contains(pt.Person_2__c)){
                 neighbours.add(pt.Person_2__c);
+                alreadyProcessed.add(pt.Person_2__c);
             }
         }
         return neighbours;
     }
-    //Buscar primeiro contato entre as pessoas
-    public static Set<Id> getPrimaryContacts(Set<Id> personIds){
+    //Buscar primeiro contato entre as pessoas marcadas com laranja
+    public static Set<Id> getPrimaryContacts(Set<Id> personIds, Set<Id> alreadyProcessed){
         //Lista definindo o status de saúde da pessoa
         List<String> healthStatus = new List<String>{'Green', 'Yellow'};
         //Lista que consulta pessoas em contato no local e que sejam outros
@@ -108,18 +112,20 @@ public with sharing class CTPersonController {
         Set<Id> primaryContact = new Set<Id>();
         for(People_Tracing__c pt: peopleTraces){
             //Senão for Person_1 então será o primeiro contato(3ª pessoa em contato)
-            if(!personIds.contains(pt.Person_1__c)){
+            if(!alreadyProcessed.contains(pt.Person_1__c)){
                 primaryContact.add(pt.Person_1__c);
+                alreadyProcessed.add(pt.Person_1__c);
             }
             //Senao for Person_2 então será o segundo contato de acordo com o 1º
-            if(!personIds.contains(pt.Person_2__c)){
+            if(!alreadyProcessed.contains(pt.Person_2__c)){
                 primaryContact.add(pt.Person_2__c);
+                alreadyProcessed.add(pt.Person_2__c);
             }
         }
         return primaryContact;
     }
-     //Buscar segundo contato entre as pessoas referenciando o primeiro contato
-     public static Set<Id> getSecundaryContacts(Set<Id> primaryContactIds){
+     //Buscar segundo contato entre as pessoas marcadas com amarelo, referenciando o primeiro contato
+     public static Set<Id> getSecundaryContacts(Set<Id> primaryContactIds, Set<Id> alreadyProcessed){
         //Lista definindo o status de saúde da pessoa
         List<String> healthStatus = new List<String>{'Green', 'Yellow'};
         //Lista que consulta pessoas em contato no local verificando os primeiros contatos para encontrar o segundo contato
@@ -134,10 +140,12 @@ public with sharing class CTPersonController {
             //Senão for Person_1 então será o próximo será o contato)
             if(!primaryContactIds.contains(pt.Person_1__c)){
                 secondaryContacts.add(pt.Person_1__c);
+                alreadyProcessed.add(pt.Person_1__c);
             }
-            //Senao for Person_2 então será o próximo será o contato)
+            //Senão for Person_2 então será o próximo será o contato)
             if(!primaryContactIds.contains(pt.Person_2__c)){
                 secondaryContacts.add(pt.Person_2__c);
+                alreadyProcessed.add(pt.Person_2__c);
             }
         }
         return secondaryContacts;

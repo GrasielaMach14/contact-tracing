@@ -23,13 +23,18 @@ public with sharing class CTContactTracingHandler {
                 statusRed.add(ps.Id);
             }
         }
+        //Verificar os registros que já foram processados para não serem executados novamente
+        Set<Id> alreadyProcessed = new Set<Id>();
         Set<Id> statusOrange = new Set<Id>();
         Set<Id> statusYellow = new Set<Id>();
-
-        statusOrange.addAll(CTPersonController.getCohabitants(statusRed));
-        statusYellow.addAll(CTPersonController.getNeighbours(statusRed));
-        Set<Id> primaryContacts = CTPersonController.getPrimaryContacts(statusRed);
+        //Próximo segundo contato do cohabitante em vermelho será laranja
+        statusOrange.addAll(CTPersonController.getCohabitants(statusRed, alreadyProcessed));
+        //Próximo segundo contato do vizinho em vermelho será amarelo
+        statusYellow.addAll(CTPersonController.getNeighbours(statusRed, alreadyProcessed));
+        Set<Id> primaryContacts = CTPersonController.getPrimaryContacts(statusRed, alreadyProcessed);
+        //Próximo segundo contato do contato principal em vermelho será laranja
         statusOrange.addAll(primaryContacts);
-        statusYellow.addAll(CTPersonController.getSecundaryContacts(primaryContacts));
+        //O contato principal em vermelho terá o contato secundário em amarelo
+        statusYellow.addAll(CTPersonController.getSecundaryContacts(primaryContacts, alreadyProcessed));
     }
 }

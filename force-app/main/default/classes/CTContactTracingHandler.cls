@@ -27,6 +27,8 @@ public with sharing class CTContactTracingHandler {
         List<Person__c> lstUpdatePersons = new List<Person__c>();
         //Verificar os registros que já foram processados para não serem executados novamente
         Set<Id> alreadyProcessed = new Set<Id>();
+        alreadyProcessed.addAll(statusRed);
+        
         Set<Id> statusOrange = new Set<Id>();
         Set<Id> statusYellow = new Set<Id>();
         //Próximo segundo contato do cohabitante em vermelho será laranja
@@ -48,7 +50,7 @@ public with sharing class CTContactTracingHandler {
         if(lstUpdatePersons.size() > 0){
             update lstUpdatePersons;
         }
-        //Capturar os locais que houveram mudanças de Status de saúde de cada pessoa e para isso será usado statusCange como parâmetro
+        //Capturar os locais que houveram mudanças de Status de saúde de cada pessoa e para isso será usado statusChange como parâmetro
         List<Location_Tracing__c> lstLocalTrack = CTLocationTracingController.getLocationsByPersonIds(statusChange);
         if(lstLocalTrack != null && lstLocalTrack.size() > 0){
             Set<Id> locationsId = new Set<Id>();

@@ -98,7 +98,7 @@ public with sharing class CTPersonController {
         }
         return neighbours;
     }
-    //Buscar primeiro contato entre as pessoas marcadas com laranja
+    //Buscar primeiro contato entre as pessoas que serão marcadas com laranja
     public static Set<Id> getPrimaryContacts(Set<Id> personIds, Set<Id> alreadyProcessed){
         //Lista definindo o status de saúde da pessoa
         List<String> healthStatus = new List<String>{'Green', 'Yellow'};
@@ -126,15 +126,13 @@ public with sharing class CTPersonController {
     }
      //Buscar segundo contato entre as pessoas marcadas com amarelo, referenciando o primeiro contato
      public static Set<Id> getSecundaryContacts(Set<Id> primaryContactIds, Set<Id> alreadyProcessed){
-        //Lista definindo o status de saúde da pessoa
-        List<String> healthStatus = new List<String>{'Green', 'Yellow'};
         //Lista que consulta pessoas em contato no local verificando os primeiros contatos para encontrar o segundo contato
         List<People_Tracing__c> peopleTraces = [SELECT Id, Person_1__c, Person_2__c FROM People_Tracing__c 
                                                             WHERE (Person_1__c IN: primaryContactIds OR Person_2__c IN: primaryContactIds) 
                                                             AND Contact_Type__c = 'OTHER'
                                                             AND Contact_Date__c = LAST_N_DAYS:10 
-                                                            AND (Person_1__r.Health_Status__c IN:healthStatus 
-                                                            OR Person_2__r.Health_Status__c IN:healthStatus)];
+                                                            AND (Person_1__r.Health_Status__c = 'Green' 
+                                                            OR Person_2__r.Health_Status__c = 'Green')];
         Set<Id> secondaryContacts = new Set<Id>();
         for(People_Tracing__c pt: peopleTraces){
             //Senão for Person_1 então será o próximo contato)

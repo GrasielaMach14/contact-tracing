@@ -60,10 +60,10 @@ public with sharing class CTLocationController {
         public static String getStatusLocation(Integer redScore){
             if(redScore == 0){
                 return 'Green';
-            }else if(redScore >= 5){
-                return 'Orange';
-            }else if(redScore >= 10){
+            }else if(redScore <= 5){
                 return 'Yellow';
+            }else if(redScore <= 10){
+                return 'Orange';
             }else{
                 return 'Red';
             }

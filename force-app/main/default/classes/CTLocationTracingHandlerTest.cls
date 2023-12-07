@@ -17,10 +17,12 @@ public with sharing class CTLocationTracingHandlerTest {
         locTracing.add(new Location_Tracing__c(Person__c = persons[0].Id, Location__c = locations[0].Id, Visit_Date__c = Date.today()));
         locTracing.add(new Location_Tracing__c(Person__c = persons[0].Id, Location__c = locations[0].Id, Visit_Date__c = Date.today()));
         locTracing.add(new Location_Tracing__c(Person__c = persons[1].Id, Location__c = locations[1].Id, Visit_Date__c = Date.today()));
+        locTracing.add(new Location_Tracing__c(Person__c = persons[1].Id, Location__c = locations[1].Id, Visit_Date__c = Date.today()));
         insert locTracing;
+
         CTLocationTracingHandler.beforeInsertLocationTracing(locTracing);
 
-        List<Location_Tracing__c> listTrace = [SELECT Id, Person__c, Location__c FROM Location_Tracing__c WHERE Person__c =: persons[0].Id AND Location__c =: locations[0].Id];
+        List<Location_Tracing__c> listTrace = [SELECT Id, Person__c, Location__c FROM Location_Tracing__c];
         System.assertEquals(locTracing.size(), listTrace.size());
         //System.assertEquals(2, listTrace[0].Person__c);
     }

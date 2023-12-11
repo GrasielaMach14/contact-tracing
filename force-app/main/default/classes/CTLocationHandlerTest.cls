@@ -62,7 +62,8 @@ public with sharing class CTLocationHandlerTest {
         }
 		System.debug('Aqui debug lstTracing: '+lstTracing[0].Location__r.Status__c);
 
-        List<Location_Tracing__c> updateTracing = [SELECT Id, Person__c, Location__c,  Person__r.Health_Status__c , Location__r.Status__c FROM Location_Tracing__c WHERE Location__r.Status__c = 'Green'];
+        List<Location_Tracing__c> updateTracing = [SELECT Id, Person__c, Location__c,  Person__r.Health_Status__c , Location__r.Status__c 
+                                                                            FROM Location_Tracing__c WHERE Location__r.Status__c = 'Green'];
 		System.debug('Aqui debug 1: '+updateTracing);
         for(Location_Tracing__c locTrack: updateTracing){
             if(updateTracing.size() > 0){

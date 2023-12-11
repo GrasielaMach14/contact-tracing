@@ -62,8 +62,7 @@ public with sharing class CTLocationHandlerTest {
         }
 		System.debug('Aqui debug lstTracing: '+lstTracing[0].Location__r.Status__c);
 
-        List<Location_Tracing__c> updateTracing = [SELECT Id, Person__c, Location__c,  Person__r.Health_Status__c , Location__r.Status__c 
-                                                                            FROM Location_Tracing__c WHERE Location__r.Status__c = 'Green'];
+        List<Location_Tracing__c> updateTracing = [SELECT Id, Person__c, Location__c,  Person__r.Health_Status__c , Location__r.Status__c FROM Location_Tracing__c WHERE Location__r.Status__c = 'Green'];
 		System.debug('Aqui debug 1: '+updateTracing);
         for(Location_Tracing__c locTrack: updateTracing){
             if(updateTracing.size() > 0){
@@ -77,11 +76,13 @@ public with sharing class CTLocationHandlerTest {
                 update updateTracing;
                 //Acrescentar na Lista de Locations os registros após update
                 List<Location__c> newLocations = new List<Location__c>();
-                Id locId = updateTracing.get(0).Id;
-                for (Location__c loc2 : locations3) {
-                    loc2.Id = locId;
-                    newLocations.add(loc2);                    
+                for(Location_Tracing__c trace: updateTracing){
+                    for (Location__c loc2 : locations3) {
+                        loc2.Id = trace.Location__c;
+                        newLocations.add(loc2);                   
+                    }
                 }
+
                 CTLocationHandler.afterUpdateStatusLocation(newLocations, oldMapLocation);
             }            
         Test.stopTest();

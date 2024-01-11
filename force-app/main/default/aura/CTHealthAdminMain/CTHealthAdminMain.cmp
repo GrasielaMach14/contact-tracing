@@ -1,0 +1,10 @@
+<aura:component implements="flexipage:availableForAllPageTypes">
+    <lightning:tabset variant="vertical">
+        <lightning:tab label="Person View">
+
+        </lightning:tab>
+        <lightning:tab label="Location View">
+
+        </lightning:tab>
+    </lightning:tabset>
+</aura:component>

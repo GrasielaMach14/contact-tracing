@@ -1,65 +1,19 @@
-<aura:component implements="flexipage:availableForAllPageTypes">
-    <div class="slds-page-header slds-page-header_record-home">
-        <div class="slds-page-header__row">
-            <div class="slds-page-header__col-title">
-                <div class="slds-media">
-                    <div class="slds-media__figure">
-                        <span class="slds-icon_container slds-icon-standard-opportunity">
-                            <!-- <svg class="slds-icon slds-page-header__icon" aria-hidden="true"> -->
-                            <!-- <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#opportunity"></use> -->
-                            <!-- </svg> -->
-                        </span>
-                    </div>
-                    <div class="slds-media__body">
-                        <div class="slds-page-header__name">
-                            <div class="slds-page-header__name-title">
-                                <h1>
-                                    <span>Contact Tracing</span>
-                                    <span class="slds-page-header__title slds-truncate" title="Person View">Person
-                                        View</span>
-                                </h1>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="slds-page-header__col-actions">
-                <div class="slds-page-header__controls">
-                    <div class="slds-page-header__control">
-                        <ul class="slds-button-group-list">
-                            <li>
-                                <button class="slds-button slds-button_neutral">Add New</button>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="slds-page-header__row slds-page-header__row_gutters">
-            <div class="slds-page-header__col-details">
-                <ul class="slds-page-header__detail-row">
-                    <li class="slds-page-header__detail-block">
-                        <div class="slds-text-color_success" title="Green">Green</div>
-                        <div class="slds-text-color_success" title="0">
-                            0</div>
-                    </li>
-                    <li class="slds-page-header__detail-block">
-                        <div class="slds-text-color_weak" title="Yellow">Yellow</div>
-                        <div class="slds-text-color_weak" title="0">
-                            0</div>
-                    </li>
-                    <li class="slds-page-header__detail-block">
-                        <div class="slds-text-color_destructive" title="Orange">Orange</div>
-                        <div class="slds-text-color_destructive" title="0">
-                            0</div>
-                    </li>
-                    <li class="slds-page-header__detail-block">
-                        <div class="slds-text-color_error" title="Red">Red</div>
-                        <div class="slds-text-color_error" title="0">
-                            0</div>
-                    </li>
-                </ul>
-            </div>
-        </div>
+<aura:component implements="force:appHostable">
+    <div class="container">
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem size="12">
+                <c:CTHealthHeader />
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12">
+                <lightning:tabset variant="vertical">
+                    <lightning:tab label="Person View" id="person_view">
+                        Person View
+                    </lightning:tab>
+                    <lightning:tab label="Location View" id="location_view">
+                        Location View
+                    </lightning:tab>
+                </lightning:tabset>
+            </lightning:layoutItem>
+        </lightning:layout>
     </div>
 </aura:component>

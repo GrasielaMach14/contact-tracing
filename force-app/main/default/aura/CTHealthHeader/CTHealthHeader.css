@@ -1,0 +1,26 @@
+.THIS .header-item {
+    font-size: small;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.THIS .colour1{
+color: green;
+font-weight: bold;
+text-shadow: 1px 1px rgba(128, 128, 128, 0.329);
+}
+.THIS .colour2{
+    color: rgb(255, 200, 0);
+    font-weight: bold;
+    text-shadow: 1px 1px rgba(128, 128, 128, 0.329);
+}
+.THIS .colour3{
+    color: rgb(255, 111, 0);
+    font-weight: bold;
+    text-shadow: 1px 1px rgba(128, 128, 128, 0.329);
+}
+.THIS .colour4{
+    color: red;
+    font-weight: bold;
+    text-shadow: 1px 1px rgba(128, 128, 128, 0.329);
+}

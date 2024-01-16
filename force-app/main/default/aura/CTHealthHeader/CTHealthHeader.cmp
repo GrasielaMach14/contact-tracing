@@ -2,7 +2,10 @@
     <!-- Este atributo irá armazenar os valores dos ids -->
     <aura:attribute name="scope" type="String" default="person" />
     <aura:attribute name="title" type="String" default="Person View" />
-    <aura:attribute name="count" type="Integer" default="0" />
+    <!-- Use esta variável para definir a contagem dos status no title = Green or Yellow ... -->
+    <aura:attribute name="count" type="Object" default="" />
+    <!-- Defina um método controlador para disparar um evento  -->
+    <aura:handler name="init" value="{!this}" action="{!c.getCountStatus}" />
 
     <div class="slds-page-header slds-page-header_record-home">
         <div class="slds-page-header__row">
@@ -48,22 +51,22 @@
                     <li class="slds-page-header__detail-block">
                         <div class="header-item colour1" title="Green">Green</div>
                         <div class="header-item colour1" title="0">
-                            0</div>
+                            {!v.count.Green}</div>
                     </li>
                     <li class="slds-page-header__detail-block">
                         <div class="header-item colour2" title="Yellow">Yellow</div>
                         <div class="header-item colour2" title="0">
-                            0</div>
+                            {!v.count.Yellow}</div>
                     </li>
                     <li class="slds-page-header__detail-block">
                         <div class="header-item colour3" title="Orange">Orange</div>
                         <div class="header-item colour3" title="0">
-                            0</div>
+                            {!v.count.Orange}</div>
                     </li>
                     <li class="slds-page-header__detail-block">
                         <div class="header-item colour4" title="Red">Red</div>
                         <div class="header-item colour4" title="0">
-                            0</div>
+                            {!v.count.Red}</div>
                     </li>
                 </ul>
             </div>

@@ -148,6 +148,19 @@ public with sharing class CTPersonController {
         }
         return secondaryContacts;
     }
+    //Realize a consulta da contagem dos status da saúde e retorne para CTHealthHeaderController
+    public static Map<String,Integer> getHealthStatus(){
+        AggregateResult[] lstPerson = [SELECT Health_Status__c, COUNT(Id) total FROM Person__c GROUP BY Health_Status__c];
+
+        if(lstPerson != null && lstPerson.size() > 0){
+            Map<String,Integer> resultMap = new Map<String,Integer>();
+            for(AggregateResult result: lstPerson){
+                resultMap.put(String.valueOf(result.get('Health_Status__c')), Integer.valueOf(result.get('total')));
+            }   
+            return resultMap;
+        }
+        return null;
+    }
     
 }
 

@@ -68,4 +68,17 @@ public with sharing class CTLocationController {
                 return 'Red';
             }
         }
+        //Realize a consulta da contagem dos status da saúde e retorne para CTHealthHeaderController
+        public static Map<String,Integer> getHealthStatusCount(){
+            AggregateResult[] lstLocation = [SELECT Status__c, COUNT(Id) locals FROM Location__c GROUP BY Status__c];
+    
+            if(lstLocation != null && lstLocation.size() > 0){
+                Map<String,Integer> resultMap = new Map<String,Integer>();
+                for(AggregateResult result: lstLocation){
+                    resultMap.put(String.valueOf(result.get('Status__c')), Integer.valueOf(result.get('locals')));
+                }   
+                return resultMap;
+            }
+            return null;
+        }
 }

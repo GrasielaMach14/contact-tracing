@@ -1,22 +1,13 @@
 public with sharing class CTHealthHeaderController {
+    // Crie o método em CTPersonController e CTLocationController para organizar a estrutura do cód
     @AuraEnabled
-    public static Integer getPersonHealthStatusCount() {
-        AggregateResult[] lstPerson = [SELECT Health_Status__c, COUNT(Id) total FROM Person__c GROUP BY Health_Status__c];
-        Integer countPerson;
-
-        for(AggregateResult result: lstPerson){
-            countPerson = Integer.valueOf(result.get('total'));
-        }
-        return countPerson;
+    public static Map<String,Integer> getPersonHealthStatusCount() {
+        //Use o tipo Map<String,Integer> para armazenar o Health status e contagem
+        return CTPersonController.getHealthStatus();
     }
     @AuraEnabled
-    public static Integer getLocationHealthStatusCount(){
-        AggregateResult[] lstLocation = [SELECT Status__c, COUNT(Id) locals FROM Location__c GROUP BY Status__c];
-        Integer countLocation;
+    public static Map<String,Integer> getLocationHealthStatusCount(){
 
-        for(AggregateResult result2 : lstLocation){
-            countLocation = Integer.valueOf(result2.get('locals'));
-        }
-        return countLocation;
+        return CTLocationController.getHealthStatusCount();
     }
 }

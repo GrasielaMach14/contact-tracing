@@ -1,15 +1,21 @@
 <aura:component implements="force:appHostable">
+    <!-- Este atributo irá armazenar os valores dos ids -->
+    <aura:attribute name="scope" type="String" default="person" />
+    <aura:attribute name="title" type="String" default="Person View" />
+
     <div class="container">
         <lightning:layout multipleRows="true">
             <lightning:layoutItem size="12">
-                <c:CTHealthHeader />
+                <!-- Chame aqui o componente pai para a mudança do título -->
+                <c:CTHealthHeader title="{!v.title}" scope="{!v.scope}" />
             </lightning:layoutItem>
             <lightning:layoutItem size="12">
-                <lightning:tabset variant="vertical">
-                    <lightning:tab label="Person View" id="person_view">
+                <!-- Aciona o evento para mudar o titulo ao ter a tab selecionada -->
+                <lightning:tabset onselect="{! c.handleSelect }" variant="vertical">
+                    <lightning:tab label="Person View" id="person">
                         Person View
                     </lightning:tab>
-                    <lightning:tab label="Location View" id="location_view">
+                    <lightning:tab label="Location View" id="location">
                         Location View
                     </lightning:tab>
                 </lightning:tabset>

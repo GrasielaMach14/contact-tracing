@@ -1,4 +1,9 @@
-<aura:component>
+<aura:component controller="CTHealthHeaderController">
+    <!-- Este atributo irá armazenar os valores dos ids -->
+    <aura:attribute name="scope" type="String" default="person" />
+    <aura:attribute name="title" type="String" default="Person View" />
+    <aura:attribute name="count" type="Integer" default="0" />
+
     <div class="slds-page-header slds-page-header_record-home">
         <div class="slds-page-header__row">
             <div class="slds-page-header__col-title">
@@ -15,8 +20,8 @@
                             <div class="slds-page-header__name-title">
                                 <h1>
                                     <span>Contact Tracing</span>
-                                    <span class="slds-page-header__title slds-truncate" title="Person View">Person
-                                        View</span>
+                                    <span class="slds-page-header__title slds-truncate"
+                                        title="{!v.title}">{!v.title}</span>
                                 </h1>
                             </div>
                         </div>
@@ -28,7 +33,9 @@
                     <div class="slds-page-header__control">
                         <ul class="slds-button-group-list">
                             <li>
-                                <button class="slds-button slds-button_neutral">Add New</button>
+                                <!-- Acione um evento ao botão para criar o modal de Criação de Records -->
+                                <button class="slds-button slds-button_neutral" onclick="{!c.createRecord}">Add
+                                    New</button>
                             </li>
                         </ul>
                     </div>

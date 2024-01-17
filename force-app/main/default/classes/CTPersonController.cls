@@ -6,11 +6,9 @@ public with sharing class CTPersonController {
         return EncodingUtil.base64Encode(hash);
     }
     //Get all the recent actual dates about the Health Changes 
-    public static List<Person__c> getRecentHealthChanges(List<Person__c> lstPrs){
-        List<Person__c> recordsLst = [SELECT Id, Name, Health_Status__c, Mobile__c, Status_Update_Date__c, Token__c 
-                                                    FROM Person__c ORDER BY Status_Update_Date__c DESC NULLS LAST];
-                                      
-        return recordsLst;
+    public static List<Person__c> getRecentHealthChanges(){
+        return [SELECT Id, Name, Health_Status__c, Mobile__c, Status_Update_Date__c, Token__c 
+                                                    FROM Person__c ORDER BY Status_Update_Date__c DESC NULLS LAST];                           
     }
     //Find a research of name or mobile or token  in query
     public static List<Person__c> searchPeople(String record){

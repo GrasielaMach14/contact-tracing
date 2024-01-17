@@ -6,6 +6,7 @@ public with sharing class CTHealthHeaderController {
         return CTPersonController.getHealthStatus();
     }
     @AuraEnabled
+    // Chame cada um desses métodos em CTHealthHeaderHelper
     public static Map<String,Integer> getLocationHealthStatusCount(){
 
         return CTLocationController.getHealthStatusCount();

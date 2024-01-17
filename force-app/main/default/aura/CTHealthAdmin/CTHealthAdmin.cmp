@@ -6,11 +6,11 @@
     <div class="container">
         <lightning:layout multipleRows="true">
             <lightning:layoutItem size="12">
-                <!-- Chame aqui o componente pai para a mudança do título -->
-                <c:CTHealthHeader title="{!v.title}" scope="{!v.scope}" />
+                <!-- Chame aqui o componente filho para a mudança do título -->
+                <c:CTHealthHeader title="{!v.title}" scope="{!v.scope}" aura:id="health-header" />
             </lightning:layoutItem>
             <lightning:layoutItem size="12">
-                <!-- Aciona o evento para mudar o titulo ao ter a tab selecionada -->
+                <!-- Aciona o evento para mudar o titulo ao ter a tab selecionada e as contagens dos status em CTHealthHeader-->
                 <lightning:tabset onselect="{! c.handleSelect }" variant="vertical">
                     <lightning:tab label="Person View" id="person">
                         Person View

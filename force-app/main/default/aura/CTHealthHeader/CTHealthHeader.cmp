@@ -6,6 +6,9 @@
     <aura:attribute name="count" type="Object" default="" />
     <!-- Defina um método controlador para disparar um evento  -->
     <aura:handler name="init" value="{!this}" action="{!c.getCountStatus}" />
+    <!-- Defina um método aura para tratar o evento da mudança do título no método pai HealthAdmin -->
+    <aura:method name="fetchCount" action="{!c.fetchCount}"
+        description="Fetch Count for person view or location view" />
 
     <div class="slds-page-header slds-page-header_record-home">
         <div class="slds-page-header__row">

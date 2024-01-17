@@ -9,9 +9,13 @@
     });
     createRecordEvent.fire();
     },
-    // Chame a função help da contagem aqui
+    // Chame a função help da contagem aqui, mas só aciona o evento em Person View
     getCountStatus : function(component, event, helper){
         helper.fetchStatusCount(component);
 
+    },
+    // Chame a função para acionar o evento para Location View também, chame essa função em handleSelect em CTHealthAdmin
+    fetchCount: function (component, event, helper) {
+        helper.fetchStatusCount(component);
     }
 })

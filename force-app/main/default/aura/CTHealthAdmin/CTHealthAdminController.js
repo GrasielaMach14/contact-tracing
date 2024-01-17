@@ -9,5 +9,10 @@
         }
         // Armazene os atributos do id aqui no scope
         component.set("v.scope", selectedTabId);
+
+        //Use o componente filho para chamar essa nova função em CTHealthHeader através da identificação do aura:id
+        const healthHeaderComp = component.find("health-header");
+        //Chame o novo método da contagem criado em CTHealthHeader 
+        healthHeaderComp.fetchCount();
     }
 })

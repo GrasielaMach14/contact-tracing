@@ -16,7 +16,7 @@
     },
 
     searchRecord: function (component, queryTerm) {
-        let action = component.get("v.scope") === "person" ? component.get("c.searchPeople") : component.get("c.searchLocation");
+        let action = component.get("v.scope") === "person" ? component.get("c.searchPeople") : component.get("c.searchLocations");
         action.setParams({
             searchTerm: queryTerm
         });

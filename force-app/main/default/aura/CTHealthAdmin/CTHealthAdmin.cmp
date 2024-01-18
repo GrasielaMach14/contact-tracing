@@ -13,10 +13,10 @@
                 <!-- Aciona o evento para mudar o titulo ao ter a tab selecionada e as contagens dos status em CTHealthHeader-->
                 <lightning:tabset onselect="{! c.handleSelect }" variant="vertical">
                     <lightning:tab label="Person View" id="person">
-                        Person View
+                        <c:CTRencentChanges scope="person" />
                     </lightning:tab>
                     <lightning:tab label="Location View" id="location">
-                        Location View
+                        <c:CTRencentChanges scope="location" />
                     </lightning:tab>
                 </lightning:tabset>
             </lightning:layoutItem>

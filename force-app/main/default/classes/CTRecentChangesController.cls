@@ -1,3 +1,10 @@
+/**
+ * @author Grasiela Machado de Lima
+ * @email aciatuani@gmail.com
+ * @create date 2024-01-19 18:43:27
+ * @modify date 2024-01-19 18:43:27
+ * @desc [description]
+ */
 public with sharing class CTRecentChangesController {
     @AuraEnabled
     public static List<Person__c> getRecentPersonHealthChanges() {

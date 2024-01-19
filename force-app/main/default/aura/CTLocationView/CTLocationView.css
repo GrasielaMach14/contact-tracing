@@ -1,0 +1,24 @@
+/**
+ * @author Grasiela Machado de Lima
+ * @email aciatuani@gmail.com
+ * @create date 2024-01-19 18:39:58
+ * @modify date 2024-01-19 18:40:00
+ * @desc [description]
+ */
+.THIS.location-card {
+    border: 1px solid #dddbda;
+    border-radius: 8px;
+    box-shadow: 2px 2px 4px #dddbda;
+}
+.THIS.Red {
+    border-top: 8px solid red;
+}
+.THIS.Orange {
+    border-top: 8px solid orange;
+}
+.THIS.Green {
+    border-top: 8px solid green;
+}
+.THIS.Yellow {
+    border-top: 8px solid #baba00;
+}

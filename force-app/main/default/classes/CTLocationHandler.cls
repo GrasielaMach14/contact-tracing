@@ -1,3 +1,10 @@
+/**
+ * @author Grasiela Machado de Lima
+ * @email aciatuani@gmail.com
+ * @create date 2024-01-19 18:42:07
+ * @modify date 2024-01-19 18:42:07
+ * @desc [description]
+ */
 public with sharing class CTLocationHandler {
     public static void beforeInserLocation(List<Location__c> newLocation) {
          for(Location__c loc: newLocation){

@@ -1,0 +1,25 @@
+/**
+* @author Grasiela Machado de Lima
+* @email aciatuani@gmail.com
+* @create date 2024-01-19 18:16:37
+* @modify date 2024-01-19 18:16:37
+* @desc [description]
+*/
+<aura:component>
+    <!-- Este atributo irá armazenar todos os ids para a pág -->
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="status" type="String" />
+    <!-- Este atributo irá armazenar lista de campos do objeto para a pág -->
+    <aura:attribute name="fields" type="String[]"
+        default="['Name','Status__c','Red_Score__c','Pincode__c','Address__c','Status_Update_Date__c']" />
+    <!-- Adicione um evento manipulador para visualização da pag  -->
+    <aura:handler event="c:CTLocationSelectEvent" action="{!c.locationSelectHandler}" />
+    <aura:if isTrue="{! !empty(v.recordId)}">
+        <!-- Usará duas classes para estilizar no css -->
+        <div class="{!v.status + ' location-card'}">
+            <!-- Adicione uma página de registro somente com permissão para leitura usando recordForm da documentação Aura-->
+            <lightning:recordForm recordId="{!v.recordId}" objectApiName="Location__c" fields="{!v.fields}" columns="1"
+                mode="readonly" />
+        </div>
+    </aura:if>
+</aura:component>

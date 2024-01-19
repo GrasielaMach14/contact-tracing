@@ -1,3 +1,10 @@
+/**
+ * @author Grasiela Machado de Lima
+ * @email aciatuani@gmail.com
+ * @create date 2024-01-19 18:41:37
+ * @modify date 2024-01-19 18:41:37
+ * @desc [description]
+ */
 public with sharing class CTContactTracingHandler {
     public static void beforeInsertPerson(List<Person__c> newRecord) {
         for(Person__c prs: newRecord){

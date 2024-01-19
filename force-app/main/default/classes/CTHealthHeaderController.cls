@@ -1,3 +1,10 @@
+/**
+ * @author Grasiela Machado de Lima
+ * @email aciatuani@gmail.com
+ * @create date 2024-01-19 18:41:43
+ * @modify date 2024-01-19 18:41:43
+ * @desc [description]
+ */
 public with sharing class CTHealthHeaderController {
     // Crie o método em CTPersonController e CTLocationController para organizar a estrutura do cód
     @AuraEnabled

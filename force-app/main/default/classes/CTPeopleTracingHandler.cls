@@ -1,3 +1,10 @@
+/**
+ * @author Grasiela Machado de Lima
+ * @email aciatuani@gmail.com
+ * @create date 2024-01-19 18:43:14
+ * @modify date 2024-01-19 18:43:14
+ * @desc [description]
+ */
 public with sharing class CTPeopleTracingHandler {
     public static void beforeInsertPeople(List<People_Tracing__c> newRecord) {
         List<People_Tracing__c> duplicates = CTPeopleTracingController.checkDuplicates(newRecord);

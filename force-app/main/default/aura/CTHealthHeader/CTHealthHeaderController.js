@@ -1,3 +1,10 @@
+/**
+ * @author Grasiela Machado de Lima
+ * @email aciatuani@gmail.com
+ * @create date 2024-01-19 18:39:13
+ * @modify date 2024-01-19 18:39:15
+ * @desc [description]
+ */
 ({
     createRecord : function(component, event, helper) {
         const createRecordEvent = $A.get("e.force:createRecord");

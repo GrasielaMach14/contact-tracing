@@ -1,3 +1,10 @@
+/**
+ * @author Grasiela Machado de Lima
+ * @email aciatuani@gmail.com
+ * @create date 2024-01-19 18:41:52
+ * @modify date 2024-01-19 18:41:52
+ * @desc [description]
+ */
 public with sharing class CTLocationController {
     public static List<Location__c> getRecentStatusChanges(){
         return [SELECT Id, Name, Address__c, Pincode__c, Red_Score__c, Status_Update_Date__c, 

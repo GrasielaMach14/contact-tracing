@@ -1,3 +1,10 @@
+/**
+* @author Grasiela Machado de Lima
+* @email aciatuani@gmail.com
+* @create date 2024-01-19 18:35:10
+* @modify date 2024-01-19 18:35:10
+* @desc [description]
+*/
 <aura:component implements="force:appHostable">
     <!-- Este atributo irá armazenar os valores dos ids -->
     <aura:attribute name="scope" type="String" default="person" />
@@ -16,7 +23,15 @@
                         <c:CTRencentChanges scope="person" />
                     </lightning:tab>
                     <lightning:tab label="Location View" id="location">
-                        <c:CTRencentChanges scope="location" />
+                        <!-- Adicione os componentes filhos dentro de layout para acionar os eventos -->
+                        <lightning:layout>
+                            <lightning:layoutItem size="8" padding="horizontal-small">
+                                <c:CTRencentChanges scope="location" />
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="4" padding="horizontal-small">
+                                <c:CTLocationView />
+                            </lightning:layoutItem>
+                        </lightning:layout>
                     </lightning:tab>
                 </lightning:tabset>
             </lightning:layoutItem>

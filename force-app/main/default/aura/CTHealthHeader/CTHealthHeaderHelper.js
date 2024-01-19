@@ -1,3 +1,10 @@
+/**
+ * @author Grasiela Machado de Lima
+ * @email aciatuani@gmail.com
+ * @create date 2024-01-19 18:39:22
+ * @modify date 2024-01-19 18:39:23
+ * @desc [description]
+ */
 ({
     // Este método é para fazer a chamada das funções em CTHealthHeaderController
     fetchStatusCount : function(component) {

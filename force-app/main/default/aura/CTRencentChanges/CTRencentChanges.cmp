@@ -1,8 +1,16 @@
+/**
+* @author Grasiela Machado de Lima
+* @email aciatuani@gmail.com
+* @create date 2024-01-19 18:40:24
+* @modify date 2024-01-19 18:40:24
+* @desc [description]
+*/
 <aura:component controller="CTRecentChangesController">
     <aura:attribute name="data" type="Object" />
     <aura:attribute name="columns" type="List" />
     <aura:attribute name="issearching" type="Boolean" default="false" />
     <aura:attribute name="scope" type="String" default="person" />
+    <!-- Use este atributo para popular os dados no controller -->
     <aura:attribute name="initialResponse" type="List" />
 
     <aura:handler name="init" value="{! this }" action="{! c.init }" />
@@ -13,6 +21,8 @@
                     isLoading="{! v.issearching }" type="search" placeholder="Search here..."></lightning:input>
             </div>
         </aura:set>
-        <lightning:datatable keyField="id" data="{! v.data }" columns="{! v.columns }" hideCheckboxColumn="true" />
+        <!-- Adicione o evento no datatable para o botão View/Update -->
+        <lightning:datatable keyField="id" data="{! v.data }" columns="{! v.columns }" hideCheckboxColumn="true"
+            onrowaction="{! c.handleRowAction }" />
     </lightning:card>
 </aura:component>

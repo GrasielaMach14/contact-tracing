@@ -1,3 +1,10 @@
+/**
+ * @author Grasiela Machado de Lima
+ * @email aciatuani@gmail.com
+ * @create date 2024-01-19 18:43:04
+ * @modify date 2024-01-19 18:43:04
+ * @desc [description]
+ */
 public with sharing class CTPeopleTracingController {
     public static List<People_Tracing__c> getTraces(String personId) {
         List<People_Tracing__c> listPeople = [SELECT Id, Name, Contact_Date__c, Person_1__c, Person_1__r.Health_Status__c, 

@@ -2,7 +2,7 @@
  * @author Grasiela Machado de Lima
  * @email aciatuani@gmail.com
  * @create date 2024-01-19 18:40:36
- * @modify date 2024-01-19 18:40:40
+ * @modify date 2024-01-19 20:24:03
  * @desc [description]
  */
 ({
@@ -21,7 +21,6 @@
             ]);
         }else{ 
             component.set('v.columns', [
-                {label: 'Name', fieldName: 'Name', type: 'text'},
                 {label: 'Name', fieldName: 'Name', type: 'text'},
                 {label: 'Phone', fieldName: 'Mobile__c', type: 'phone'},
                 {label: 'Token', fieldName: 'Token__c', type: 'text'},

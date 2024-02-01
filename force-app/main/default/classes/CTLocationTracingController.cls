@@ -6,15 +6,12 @@
  * @desc [description]
  */
 public with sharing class CTLocationTracingController {
-    public static Location_Tracing__c getVisitors(String localId) {
-        List<Location_Tracing__c> lstTracing = [SELECT Id, Name, CreatedDate, Person__c, Location__c, Visit_Date__c, 
+    public static List<Location_Tracing__c> getVisitors(String localId) {
+        return [SELECT Id, Name, CreatedDate, Person__c, Location__c, Visit_Date__c, 
                                                         Person__r.Token__c, Person__r.Health_Status__c, 
                                                         LastViewedDate, LastModifiedDate FROM Location_Tracing__c 
-                                                        WHERE Id =: localId ORDER BY Visit_Date__c DESC];
-        if (lstTracing != null && lstTracing.size() > 0) {
-            return lstTracing[0];
-        }
-        return null;
+                                                        WHERE Location__c =: localId AND Visit_Date__c = Last_N_DAYS:30 ORDER BY Visit_Date__c DESC];
+
     }
     public static List<Location_Tracing__c> getLocationsByPersonIds(Set<Id> peopleId){
         List<Location_Tracing__c> lstTracingPeople = [SELECT Id,  Person__c, Location__c FROM Location_Tracing__c 

@@ -25,7 +25,7 @@ public with sharing class CTLocationController {
     }
 
     public static Location__c getLocationByID(String locationId){
-        List<Location__c> lstLocation = [SELECT Id, Name, Address__c, Pincode__c, Status_Update_Date__c, 
+        List<Location__c> lstLocation = [SELECT Id, Name, Address__c, Red_Score__c, Pincode__c, Status_Update_Date__c, 
                                                     Status__c FROM Location__c WHERE Id =: locationId];
         if(lstLocation != null && lstLocation.size() > 0){
             return lstLocation[0];

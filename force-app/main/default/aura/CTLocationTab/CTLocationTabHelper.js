@@ -1,3 +1,10 @@
+/**
+ * @author Grasiela Machado de Lima
+ * @email aciatuani@gmail.com
+ * @create date 2024-02-02 23:40:10
+ * @modify date 2024-02-02 23:40:11
+ * @desc [description]
+ */
 ({
     fetchLocationInformation : function(component) {
         const recordId = component.get("v.recordId");

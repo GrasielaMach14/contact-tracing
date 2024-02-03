@@ -1,3 +1,10 @@
+/**
+* @author Grasiela Machado de Lima
+* @email aciatuani@gmail.com
+* @create date 2024-02-02 23:40:26
+* @modify date 2024-02-02 23:40:26
+* @desc [description]
+*/
 <aura:component controller="CTLocationTabController" implements="force:appHostable">
     <aura:attribute name="recordId" type="String" />
     <aura:attribute name="locationInfo" type="Object" />

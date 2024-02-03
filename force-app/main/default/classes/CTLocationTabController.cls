@@ -1,3 +1,10 @@
+/**
+ * @author Grasiela Machado de Lima
+ * @email aciatuani@gmail.com
+ * @create date 2024-02-02 23:39:21
+ * @modify date 2024-02-02 23:39:21
+ * @desc [description]
+ */
 public with sharing class CTLocationTabController {
     @AuraEnabled
     public static LocationInfo getLocationDetails(String recordId){

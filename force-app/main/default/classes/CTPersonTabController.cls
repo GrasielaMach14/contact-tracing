@@ -1,8 +1,15 @@
+/**
+ * @author Grasiela Machado de Lima
+ * @email aciatuani@gmail.com
+ * @create date 2024-02-02 23:38:58
+ * @modify date 2024-02-02 23:38:58
+ * @desc [description]
+ */
 public with sharing class CTPersonTabController {
     @AuraEnabled
     public static UserInformation getPersonDetails(String recordId){
         UserInformation info = new UserInformation();
-
+        System.debug('Info: ' + info);
         Person__c person = CTPersonController.getPersonByID(recordId);
         if(person != null){
             info.name = person.Name;
@@ -11,14 +18,18 @@ public with sharing class CTPersonTabController {
             info.statusUpdateOn = person.Status_Update_Date__c;
             info.status = person.Health_Status__c;
         }
+        System.debug('Person: ' + person);
+
         List<People_Tracing__c> traces = CTPeopleTracingController.getTraces(recordId);
+        System.debug('Traces List: ' + traces);
 
         if(traces != null && traces.size() > 0){
             List<CloseContacts> closeContacts = new List<CloseContacts>();
             // Será definido SET<Id> pq temos Person_1 e Person_2, eles devem serem unificados
             Set<Id> uniqueIds = new Set<Id>();
             uniqueIds.add(recordId);
-            
+            System.debug('Unique Id: ' + uniqueIds);
+
             for(People_Tracing__c trc: traces){
                 CloseContacts close = new CloseContacts();
 
@@ -37,6 +48,8 @@ public with sharing class CTPersonTabController {
                 }
                 closeContacts.add(close);
             }
+            System.debug('CloseContacts List: ' + closeContacts);
+
             // Faça a conexão entre info e closeContact List
             if(closeContacts.size() > 0 && closeContacts != null){
                 info.contacts = closeContacts;

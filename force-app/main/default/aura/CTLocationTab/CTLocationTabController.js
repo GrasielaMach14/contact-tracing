@@ -1,3 +1,10 @@
+/**
+ * @author Grasiela Machado de Lima
+ * @email aciatuani@gmail.com
+ * @create date 2024-02-02 23:39:56
+ * @modify date 2024-02-02 23:39:57
+ * @desc [description]
+ */
 ({
     locationSearchHandler : function(component, event, helper) {
         helper.fetchLocationInformation(component);
